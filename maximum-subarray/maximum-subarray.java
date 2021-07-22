@@ -4,8 +4,10 @@ class Solution {
         for(int i = 0; i < nums.length; i++){
             sum += nums[i];
             if(sum > maxi) maxi = sum;
-            if(sum < 0) sum = 0;
+            if(sum < 0 ) sum = 0;
+            
         }
         return maxi;
     }
 }
+
