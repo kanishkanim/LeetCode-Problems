@@ -1,48 +1,33 @@
 class Solution {
-    public List<List<Integer>> fourSum(int[] arr, int target) {
-        Arrays.sort(arr);
-        List<List<Integer>> quadruplets = new ArrayList<>();
-        
-        for (int i=0; i<arr.length; i++) {
-            if (i>0 && arr[i] == arr[i-1]) {
-                continue;
-            }
-            
-            for (int j=i+1; j<arr.length; j++) {
-                if (j>i+1 && arr[j] == arr[j-1]) {
-                    continue;
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            for (int j = i + 1; j < nums.length; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int sum = target - nums[i] - nums[j];
+                int start = j + 1;
+                int end = nums.length - 1;
+                while (start < end) {
+                    if (start > j + 1 && nums[start] == nums[start - 1]) {
+                        start++;
+                        continue;
+                    }
+                    
+                    if (nums[start] + nums[end] == sum) {
+                        List<Integer> subAns = Arrays.asList(nums[i], nums[j], nums[start], nums[end]);
+                        ans.add(subAns);
+                        start++;
+                        end--;
+                    } else if (nums[start] + nums[end] < sum) {
+                        start++;
+                    } else {
+                        end--;
+                    }
                 }
-                
-                searchPair(arr, target, i, j, quadruplets);
             }
         }
-        
-        return quadruplets;
-    }
-    
-    private void searchPair(int[] arr, int target, int first, int second, List<List<Integer>> quadruplets) {
-        int left = second + 1;
-        int right = arr.length - 1;
-        
-        while(left < right) {
-            int sum = arr[first] + arr[second] + arr[left] + arr[right];
-            if (sum == target) {
-                quadruplets.add(Arrays.asList(arr[first], arr[second], arr[left], arr[right]));
-                left++;
-                right--;
-                
-                 while (left < right && arr[left] == arr[left - 1]) {
-                    left++;
-                }
-
-                while (left < right && arr[right] == arr[right + 1]) {
-                    right--;
-                }
-            } else if (sum < target) {
-                left++;
-            } else {
-                right--;
-            }       
-        }
+        return ans;
     }
 }
