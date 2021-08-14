@@ -9,48 +9,61 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if(head == null || head.next == null)
-            return true;
-        
+    
+    public static ListNode midNode(ListNode head){
+        if(head == null || head.next == null) return head;
         ListNode slow = head;
         ListNode fast = head;
-        
-        //find the middle of linked list
         while(fast.next != null && fast.next.next != null){
             slow = slow.next;
             fast = fast.next.next;
         }
-        
-        //reverse the right half of LL
-        slow.next = reverseList(slow.next);
-        
-        //move slow to right half
-        slow = slow.next;
-        
-        //Check if the left half is equals to right half or not
-        while(slow != null){
-            if(head.val != slow.val){
-                return false;
-            }
-            
-            head = head.next;
-            slow = slow.next;
-        }
-        
-        return true;
+        return slow;
     }
     
-    ListNode reverseList(ListNode head){
-        ListNode pre = null;
-        ListNode next = null;
+    public static ListNode reverseLL(ListNode head){
+        if(head == null || head.next == null) return head;
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode forw = null;
         
-        while(head != null){
-            next = head.next;
-            head.next = pre;
-            pre = head;
-            head = next;
+        while(curr != null){
+            forw = curr.next; //backup
+            curr.next = prev; //link
+            
+            prev = curr;
+            curr = forw;
         }
-        return pre;
+        return prev;
+    }
+    
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        
+        ListNode mid = midNode(head);
+        ListNode newHead = mid.next;
+        mid.next = null;
+        
+        newHead = reverseLL(newHead);
+        
+        ListNode c1 = head;
+        ListNode c2 = newHead;
+        
+        boolean res = true;
+        while(c2 != null){ //we do a check for only c2 as it handles the case for odd LL
+            
+            if(c1.val != c2.val){
+                res = false;
+                break;   
+            }
+            
+            c1 = c1.next;
+            c2 = c2.next;
+        }
+        
+        newHead = reverseLL(newHead);
+        mid.next = newHead;
+        
+        return res;
     }
 }
