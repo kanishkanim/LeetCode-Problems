@@ -20,8 +20,8 @@ class Solution {
             if(name.charAt(i - 1) != typed.charAt(j)) return false;
             j++;
         }
-        
-        return i < name.length() ? false:true;
+            
+        return i < name.length() ? false : true;
         
     }
 }
