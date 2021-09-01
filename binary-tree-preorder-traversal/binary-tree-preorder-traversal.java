@@ -13,18 +13,20 @@
  *     }
  * }
  */
-
 class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
-        return recursePreorder(root, new LinkedList<>());
+    
+    public static void dfs(TreeNode root, List<Integer> list){
+        if(root == null) return;
+        
+        list.add(root.val);
+        
+        dfs(root.left, list);
+        dfs(root.right, list);
     }
     
-    private List<Integer> recursePreorder(TreeNode currNode, List<Integer> lst) {
-        if (currNode == null) return lst;
-        
-        lst.add(currNode.val);
-        recursePreorder(currNode.left, lst);
-        recursePreorder(currNode.right, lst);
-        return lst;
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        dfs(root, list);
+        return list;
     }
 }
