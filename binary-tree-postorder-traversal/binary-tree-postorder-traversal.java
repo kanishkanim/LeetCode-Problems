@@ -13,49 +13,20 @@
  *     }
  * }
  */
-
-// Iterative Approach
-
 class Solution {
-    public static class Pair{
-        TreeNode node;
-        int state;
+    
+    public static void dfs(TreeNode root, List<Integer> list){
+        if(root == null) return;
         
-        Pair(TreeNode node, int state){
-            this.node = node;
-            this.state = state;
-        }
+        dfs(root.left, list);
+        dfs(root.right, list);
+        list.add(root.val);
     }
+    
     public List<Integer> postorderTraversal(TreeNode root) {
-       if(root == null) return new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         
-       Stack<Pair> st = new Stack<>();
-       st.push(new Pair(root, 1));
-       List<Integer> postorder = new ArrayList<>();
-       
-       while(st.size() > 0){
-           Pair top =  st.peek();
-           
-           if(top.state == 1){
-               //PRE ORDER AREA
-               top.state++;
-               if(top.node.left != null){
-                   st.push(new Pair(top.node.left, 1));
-               }
-           }
-           else if(top.state == 2){
-               //IN ORDER AREA
-               top.state++;
-               if(top.node.right != null){
-                   st.push(new Pair(top.node.right, 1));
-               }
-           }
-           else if(top.state == 3){
-               //POST ORDER AREA
-               postorder.add(top.node.val);
-               st.pop();
-           }
-       }
-        return postorder;
+        dfs(root, list);
+        return list;
     }
 }
