@@ -13,29 +13,21 @@
  *     }
  * }
  */
-
-// Recursive Approach
-
 class Solution {
- List<Integer> al = new ArrayList<Integer>();
-
+    
+    public static void dfs(TreeNode root, List<Integer> list){
+        if(root == null) return;
+        
+        dfs(root.left, list);
+        list.add(root.val);
+        dfs(root.right, list);
+    }
+    
     public List<Integer> inorderTraversal(TreeNode root) {
-        printInorder(root);
-        return al;
+        
+        List<Integer> list = new ArrayList<>();
+        
+        dfs(root, list);
+        return list;
     }
-    void printInorder(TreeNode node)
-    {
-        if (node == null)
-            return;
- 
-        /* first recur on left child */
-        printInorder(node.left);
- 
-        /* then print the data of node */
-        al.add(node.val);
- 
-        /* now recur on right child */
-        printInorder(node.right);
-    }
- 
 }
