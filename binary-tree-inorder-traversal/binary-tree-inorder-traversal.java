@@ -14,20 +14,25 @@
  * }
  */
 class Solution {
-    
-    public static void dfs(TreeNode root, List<Integer> list){
-        if(root == null) return;
-        
-        dfs(root.left, list);
-        list.add(root.val);
-        dfs(root.right, list);
-    }
-    
     public List<Integer> inorderTraversal(TreeNode root) {
-        
         List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> st = new Stack<>();
         
-        dfs(root, list);
+        TreeNode node = root;
+        
+        while(true){
+            if(node != null) {
+                st.push(node);
+                node = node.left;
+            }else{
+                if(st.isEmpty()){
+                    break;
+                }
+                node = st.pop();
+                list.add(node.val);
+                node = node.right;
+            }
+        }
         return list;
     }
 }
