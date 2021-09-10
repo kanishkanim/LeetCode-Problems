@@ -3,20 +3,24 @@ class Solution {
         int i = 0;
         int j = height.length - 1;
         
-        int water = 0;
-        
-        while(i < j){
-            int w = j - i;
-            int h = Math.min(height[i], height[j]);
+        int maxWater = 0;
             
-            water = Math.max(water, w * h);
+        while(i < j){
+            
+            int l = j - i;
+            int h = Math.min(height[i], height[j]);
+            int water = l * h;
+            
+            maxWater = Math.max(water, maxWater);
             
             if(height[i] < height[j]){
                 i++;
             }else{
                 j--;
             }
+            
         }
-        return water;
+        
+        return maxWater;
     }
 }
